@@ -1,0 +1,38 @@
+
+{% extends "base.html" %}
+
+{% block title %} Translator Form {% endblock %}
+
+{% block content %}
+  <div class="container mx-auto mt-8 text-center">
+    <h1 class="text-3xl font-semibold mb-4">Translation Form</h1>
+
+    <form method="post" action="{% url 'index' %}" class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
+      {% csrf_token %}
+
+      <div class="mb-4">
+        {{ form.text_to_translate.label_tag }}
+        <p>{{ form.text_to_translate }}</p>
+      </div>
+
+      <div class="mb-4">
+        {{ form.target_language.label_tag }}
+        {{ form.target_language }}
+      </div>
+
+      <div class="mb-4">
+        {{ form.source_language.label_tag }}
+        {{ form.source_language }}
+      </div>
+
+      <button type="submit" class="bg-blue-500 text-block py-2 px-4 rounded-md hover:bg-blue-700">Translate</button>
+    </form>
+
+    {% if translation_result %}
+      <div class="mt-8">
+        <h2 class="text-xl font-semibold mb-2">Translation Result:</h2>
+        <p class="text-gray-800">{{ translation_result.data.translations.0.translatedText }}</p>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
